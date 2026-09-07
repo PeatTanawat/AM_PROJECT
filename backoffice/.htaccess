@@ -1,0 +1,24 @@
+RewriteEngine On
+
+# --- Security: block access to VCS / metadata directories (.git, .svn, .hg) ---
+RewriteRule (^|/)\.(git|svn|hg)(/|$) - [F,L]
+
+# ส่ง header Authorization (Bearer token) ต่อให้ PHP อ่านได้ผ่าน $_SERVER['HTTP_AUTHORIZATION']
+RewriteCond %{HTTP:Authorization} ^(.+)$
+RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+# only rewrite extensionless URLs -> missing static files (.png/.css) return real 404, not 500
+RewriteCond %{REQUEST_URI} !\.[a-zA-Z0-9]+$
+RewriteRule (.*) $1.php [L]
+
+# --- Security: disable directory listing ---
+Options -Indexes
+
+# --- Security: deny direct web access to sensitive files ---
+# (.env, logs, sql dumps, composer/build metadata, backup/config files, dev utilities)
+# NB: this only blocks HTTP access; PHP still reads these from the filesystem.
+<FilesMatch "(^\.|\.(env|log|sql|md|lock|bak|dist|example|ini)$|^composer\.(json|lock)$|^(test_db|generate_hash)\.php$)">
+    Require all denied
+</FilesMatch>

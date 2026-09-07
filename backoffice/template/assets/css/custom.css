@@ -1,0 +1,200 @@
+:root {
+    --font-sans-serif: 'Kanit', sans-serif;
+}
+
+html, body {
+    font-family: var(--font-sans-serif) !important;
+}
+
+input, button, select, textarea {
+    font-family: var(--font-sans-serif) !important;
+}
+
+.ri-refresh-line {
+    animation: spin 2s linear infinite;
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.pagination .page-item.active .page-link,
+.pagination .page-item .page-link.active {
+    background-color: #605dff;
+    border-color: #605dff;
+    color: #fff;
+    z-index: 0 !important;
+}
+/* ===== Project layout overrides (intern/am) ===== */
+/* #1 fix: select2 hides the original <select> with this class but select2.min.css here
+   is missing the rule, so the original select keeps full width and causes horizontal scroll. */
+.select2-hidden-accessible {
+    position: absolute !important;
+    width: 1px !important;
+    min-width: 1px !important;
+    max-width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0 0 0 0) !important;
+    clip-path: inset(50%) !important;
+    border: 0 !important;
+    white-space: nowrap !important;
+}
+/* กันสกอลล์แนวนอน — ใส่ที่ body เท่านั้น (อย่าใส่ที่ html)
+   เพราะ overflow-x:hidden ที่ <html> จะทำให้ <html> กลายเป็น scroll container เอง
+   -> Bootstrap ที่ล็อกสกอลล์ตอนเปิด modal ด้วย overflow:hidden ที่ <body> จะล็อกไม่ถึง
+   -> พื้นหลังยังเลื่อนได้. ใส่ที่ body อย่างเดียวยังกันแนวนอนได้ผ่าน scroll propagation */
+body { overflow-x: hidden; max-width: 100%; }
+/* ล็อกสกอลล์พื้นหลังตอนเปิด modal — ครอบทั้ง <html> และ <body> (Bootstrap ใส่ .modal-open ที่ body) */
+html:has(> body.modal-open),
+body.modal-open { overflow: hidden !important; }
+
+/* #5 user profile pinned at the bottom of the sidebar
+   (.sidebar-area already has position:fixed from the theme = containing block) */
+.sidebar-user {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    background: #fff;
+    border-top: 1px solid #eef0f3;
+}
+.sidebar-user .logout-btn { line-height: 0; }
+/* เว้นที่ท้ายลิสต์เมนูให้พ้นกล่องโปรไฟล์ (footer สูง ~75px) — ใส่ที่ .menu-inner ซึ่งอยู่ใน
+   พื้นที่ scroll จริงของ SimpleBar (padding บน .layout-menu ตัวนอกไม่เพิ่มพื้นที่เลื่อน) */
+.layout-menu .menu-inner { padding-bottom: 92px; }
+
+/* #6 narrow the sidebar: theme default 260/250px -> 200px.
+   scoped to >=1200px (where the sidebar is shown) so mobile off-canvas stays intact.
+   the collapsed state ([sidebar-data-theme=sidebar-hide]) has higher specificity
+   and is untouched. main-content padding-left keeps the ~12px gap (200 + 12 = 212). */
+@media only screen and (min-width: 1200px) {
+    .sidebar-area {
+        width: 240px;
+    }
+    .main-content {
+        padding-left: 252px;
+    }
+}
+
+/* เว้นระยะด้านบนของเนื้อหา (หลังเอา breadcrumb header ออกทุกหน้า ไม่งั้นการ์ดชิดบนเกินไป) */
+.main-content {
+    padding-top: 1.5rem;
+}
+
+/* ===== Global loading: spinner หมุนกลางจอ (full-screen) — ทุกหน้า/ทุก ajax =====
+   คุมด้วย JS ใน loading.js: โผล่อัตโนมัติทุก ajax แบบมี delay (โหลดเร็วจะไม่เห็น) */
+#cpdth-loading {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(1px);
+    z-index: 99999;
+}
+#cpdth-loading.show {
+    display: flex;
+}
+#cpdth-loading .cpdth-loading-spinner {
+    width: 3rem;
+    height: 3rem;
+    border-width: 0.3em;
+    color: #605DFF;
+}
+
+/* ปุ่มระหว่างโหลด */
+.cpdth-btn-loading {
+    opacity: 0.65;
+    pointer-events: none;
+}
+
+/* DataTables: ซ่อนกล่อง "กำลังดำเนินการ..." กลางตาราง — ใช้ spinner กลางจอแทน */
+.dataTables_processing {
+    display: none !important;
+}
+
+/* #7 sidebar แคบ (200px): เมนูที่ข้อความยาว เช่น "คำขอยืนยันตัวตนผู้ใช้งาน"
+   ให้ตัดบรรทัดแทนการดันเนื้อหาจนเกิด scrollbar แนวนอน, ตรึง icon ไว้ซ้าย */
+.sidebar-area .menu-vertical .menu-item .menu-link {
+    display: flex;
+    align-items: center;
+    white-space: normal;
+    position: relative;
+}
+.sidebar-area .menu-vertical .menu-item .menu-link .menu-icon {
+    flex-shrink: 0;
+}
+.sidebar-area .menu-vertical .menu-item .menu-link .title {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+/* badge นับจำนวน: ตรึงมุมขวา-กึ่งกลาง (ออกนอก flow) + เว้นที่ฝั่งขวาของข้อความไม่ให้ทับ */
+.sidebar-area .menu-vertical .menu-item .menu-link:has(.badge) .title {
+    padding-right: 24px;
+}
+.sidebar-area .menu-vertical .menu-item .menu-link .badge {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.default-table-area thead th {
+    white-space: nowrap;
+    vertical-align: middle;
+} 
+table.dataTable thead .dt-column-order::before,
+table.dataTable thead .dt-column-order::after,
+table.dataTable thead .sorting::before,
+table.dataTable thead .sorting::after,
+table.dataTable thead .sorting_asc::before,
+table.dataTable thead .sorting_asc::after,
+table.dataTable thead .sorting_desc::before,
+table.dataTable thead .sorting_desc::after {
+    font-family: Arial, "Segoe UI Symbol", sans-serif !important;
+}
+
+.app-tabs { flex-wrap: nowrap; }
+.app-tabs .nav-item { flex: 1 1 0; }
+.app-tabs .nav-link {
+    width: 100%; text-align: center;
+    font-size: 1.05rem; font-weight: 600;
+    padding: .85rem 1rem;
+}
+
+/* ===== ปุ่ม action ในตาราง (จัดการ/แก้ไข/ลบ/เปิดดู) — ไอคอน+ข้อความ เด่นและอ่านง่ายกว่า btn-sm =====
+   ใส่ class "table-action-btn" คู่กับ btn สีเดิม (btn-warning/btn-danger/btn-secondary ฯลฯ) */
+.table-action-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: .3rem;
+    font-weight: 600; font-size: .9rem; padding: .45rem .85rem; white-space: nowrap;
+}
+.table-action-btn .material-symbols-outlined { font-size: 18px; line-height: 1; }
+/* ตัวอักษรปุ่ม action เป็นสีขาวเสมอ (รวม btn-warning ที่ปกติเป็นตัวอักษรเข้ม) */
+.table-action-btn,
+.table-action-btn:hover,
+.table-action-btn:focus,
+.table-action-btn:active { color: #fff; }
+
+.sidebar-area .logo .logo-text {
+    left: 56px !important;
+    top: 50% !important;
+    transform: translateY(-50%);
+}
+
+/* ===== invalid-state ของ ValidateRequired (js/main.js) — ขอบแดงครอบทุกชนิด widget ===== */
+.form-control.is-invalid,
+.form-select.is-invalid { border-color: #dc3545 !important; }
+/* select2 (control จริงเป็น sibling ของ <select>) */
+select.is-invalid + .select2-container .select2-selection { border-color: #dc3545 !important; }
+/* TomSelect */
+select.is-invalid + .ts-wrapper .ts-control { border-color: #dc3545 !important; }
+/* TinyMCE */
+.tox-tinymce.is-invalid-widget { border-color: #dc3545 !important; }
+/* กลุ่ม radio */
+.is-invalid-group { outline: 1px solid #dc3545; outline-offset: 4px; border-radius: 6px; }
+/* ข้อความใต้ช่อง */
+.vr-feedback { display: block; }
+/* กัน bootstrap ซ่อน icon invalid บน select ที่มี widget ทับ */
+select.is-invalid { background-image: none !important; }

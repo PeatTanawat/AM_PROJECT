@@ -1,0 +1,331 @@
+.form-label {
+	margin-bottom: 0.5rem !important;
+}
+
+.col-form-label {
+	padding-top: calc(0.375rem + var(--bs-border-width)) !important;
+	padding-bottom: calc(0.375rem + var(--bs-border-width)) !important;
+	margin-bottom: 0 !important;
+	font-size: inherit !important;
+	line-height: 1.5 !important;
+}
+
+.col-form-label-sm {
+	padding-top: calc(0.25rem + var(--bs-border-width)) !important;
+	padding-bottom: calc(0.25rem + var(--bs-border-width)) !important;
+	font-size: 0.875rem !important;
+}
+
+.col-form-label-lg {
+	padding-top: calc(0.5rem + var(--bs-border-width)) !important;
+	padding-bottom: calc(0.5rem + var(--bs-border-width)) !important;
+	font-size: 1.25rem !important;
+}
+
+.form-text {
+	margin-top: 0.25rem !important;
+	font-size: 0.875em !important;
+	color: var(--bs-secondary-color) !important;
+}
+
+.form-control,
+.form-select,
+.input-group-text {
+	font-size: 1rem !important;
+	font-weight: 400 !important;
+	line-height: 1.5 !important;
+	border-radius: 0.375rem !important;
+}
+
+.form-control {
+	display: block !important;
+	/*width: 100% !important;*/
+	min-height: calc(1.5em + 0.75rem + 2px) !important;
+	height: auto !important;
+	padding: 0.375rem 0.75rem !important;
+	color: var(--bs-body-color) !important;
+	appearance: none !important;
+	background-color: var(--bs-body-bg) !important;
+	background-clip: padding-box !important;
+	border: 1px solid #ced4da !important;
+	box-shadow: none !important;
+	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !important;
+}
+
+.form-control::placeholder {
+	color: #6c757d !important;
+	opacity: 1 !important;
+}
+
+.form-control:focus,
+.form-select:focus,
+.form-check-input:focus,
+.form-range:focus::-webkit-slider-thumb,
+.form-range:focus::-moz-range-thumb {
+	border-color: #86b7fe !important;
+	outline: 0 !important;
+	box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25) !important;
+}
+
+.form-control:disabled,
+.form-select:disabled,
+.form-control[readonly] {
+	background-color: #e9ecef !important;
+	opacity: 1 !important;
+}
+
+.form-control::file-selector-button {
+	padding: 0.375rem 0.75rem !important;
+	margin: -0.375rem -0.75rem !important;
+	margin-inline-end: 0.75rem !important;
+	color: var(--bs-body-color) !important;
+	background-color: #e9ecef !important;
+	border-color: inherit !important;
+	border-style: solid !important;
+	border-width: 0 !important;
+	border-inline-end-width: 1px !important;
+	border-radius: 0 !important;
+}
+
+.form-control-sm {
+	min-height: calc(1.5em + 0.5rem + 2px) !important;
+	padding: 0.25rem 0.5rem !important;
+	font-size: 0.875rem !important;
+	border-radius: 0.25rem !important;
+}
+
+.form-control-lg {
+	min-height: calc(1.5em + 1rem + 2px) !important;
+	padding: 0.5rem 1rem !important;
+	font-size: 1.25rem !important;
+	border-radius: 0.5rem !important;
+}
+
+.form-control-sm::file-selector-button {
+	padding: 0.25rem 0.5rem !important;
+	margin: -0.25rem -0.5rem !important;
+	margin-inline-end: 0.5rem !important;
+}
+
+.form-control-lg::file-selector-button {
+	padding: 0.5rem 1rem !important;
+	margin: -0.5rem -1rem !important;
+	margin-inline-end: 1rem !important;
+}
+
+textarea.form-control {
+	min-height: calc(1.5em + 0.75rem + 2px) !important;
+}
+
+textarea.form-control-sm {
+	min-height: calc(1.5em + 0.5rem + 2px) !important;
+}
+
+textarea.form-control-lg {
+	min-height: calc(1.5em + 1rem + 2px) !important;
+}
+
+.form-control-color {
+	width: 3rem !important;
+	height: calc(1.5em + 0.75rem + 2px) !important;
+	padding: 0.375rem !important;
+}
+
+.form-control-color.form-control-sm {
+	height: calc(1.5em + 0.5rem + 2px) !important;
+}
+
+.form-control-color.form-control-lg {
+	height: calc(1.5em + 1rem + 2px) !important;
+}
+
+.form-select {
+	display: block !important;
+	width: 100% !important;
+	min-height: calc(1.5em + 0.75rem + 2px) !important;
+	padding: 0.375rem 2.25rem 0.375rem 0.75rem !important;
+	color: var(--bs-body-color) !important;
+	appearance: none !important;
+	background-color: var(--bs-body-bg) !important;
+	background-position: right 0.75rem center !important;
+	background-size: 16px 12px !important;
+	border: 1px solid #ced4da !important;
+	transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out !important;
+}
+
+.form-select[multiple],
+.form-select[size]:not([size="1"]) {
+	padding-right: 0.75rem !important;
+	background-image: none !important;
+}
+
+.form-select-sm {
+	padding-top: 0.25rem !important;
+	padding-bottom: 0.25rem !important;
+	padding-left: 0.5rem !important;
+	font-size: 0.875rem !important;
+	border-radius: 0.25rem !important;
+}
+
+.form-select-lg {
+	padding-top: 0.5rem !important;
+	padding-bottom: 0.5rem !important;
+	padding-left: 1rem !important;
+	font-size: 1.25rem !important;
+	border-radius: 0.5rem !important;
+}
+
+.form-check {
+	display: block !important;
+	min-height: 1.5rem !important;
+	padding-left: 1.5em !important;
+	margin-bottom: 0.125rem !important;
+}
+
+.form-check-input {
+	width: 1em !important;
+	height: 1em !important;
+	margin-top: 0.25em !important;
+	vertical-align: top !important;
+	background-color: #fff !important;
+	background-repeat: no-repeat !important;
+	background-position: center !important;
+	background-size: contain !important;
+	border: 1px solid rgba(0, 0, 0, 0.25) !important;
+	print-color-adjust: exact !important;
+}
+
+.form-check-input:checked {
+	background-color: #0d6efd !important;
+	border-color: #0d6efd !important;
+}
+
+.form-check-input[type="checkbox"]:indeterminate {
+	background-color: #0d6efd !important;
+	border-color: #0d6efd !important;
+}
+
+.form-switch .form-check-input {
+	width: 2em !important;
+	margin-left: -2.5em !important;
+	border-radius: 2em !important;
+	transition: background-position 0.15s ease-in-out !important;
+}
+
+.form-range::-webkit-slider-thumb,
+.form-range::-moz-range-thumb {
+	background-color: #0d6efd !important;
+}
+
+.input-group-text {
+	display: flex !important;
+	align-items: center !important;
+	padding: 0.375rem 0.75rem !important;
+	color: var(--bs-body-color) !important;
+	text-align: center !important;
+	white-space: nowrap !important;
+	background-color: #e9ecef !important;
+	border: 1px solid #ced4da !important;
+}
+
+.input-group-lg > .form-control,
+.input-group-lg > .form-select,
+.input-group-lg > .input-group-text,
+.input-group-lg > .btn {
+	padding: 0.5rem 1rem !important;
+	font-size: 1.25rem !important;
+	border-radius: 0.5rem !important;
+}
+
+.input-group-sm > .form-control,
+.input-group-sm > .form-select,
+.input-group-sm > .input-group-text,
+.input-group-sm > .btn {
+	padding: 0.25rem 0.5rem !important;
+	font-size: 0.875rem !important;
+	border-radius: 0.25rem !important;
+}
+
+.form-floating > .form-control,
+.form-floating > .form-control-plaintext,
+.form-floating > .form-select {
+	height: calc(3.5rem + 2px) !important;
+	min-height: calc(3.5rem + 2px) !important;
+	line-height: 1.25 !important;
+}
+
+.form-floating > label {
+	padding: 1rem 0.75rem !important;
+}
+
+.form-floating > .form-control,
+.form-floating > .form-control-plaintext {
+	padding: 1rem 0.75rem !important;
+}
+
+.form-floating > .form-control:focus,
+.form-floating > .form-control:not(:placeholder-shown),
+.form-floating > .form-control-plaintext:focus,
+.form-floating > .form-control-plaintext:not(:placeholder-shown) {
+	padding-top: 1.625rem !important;
+	padding-bottom: 0.625rem !important;
+}
+
+.form-floating > .form-select {
+	padding-top: 1.625rem !important;
+	padding-bottom: 0.625rem !important;
+}
+
+.btn {
+	--bs-btn-padding-x: 0.75rem !important;
+	--bs-btn-padding-y: 0.375rem !important;
+	--bs-btn-font-size: 1rem !important;
+	--bs-btn-font-weight: 400 !important;
+	--bs-btn-line-height: 1.5 !important;
+	--bs-btn-border-radius: 0.375rem !important;
+	font-size: var(--bs-btn-font-size) !important;
+}
+
+.btn-sm,
+.btn-group-sm > .btn {
+	--bs-btn-padding-y: 0.25rem !important;
+	--bs-btn-padding-x: 0.5rem !important;
+	--bs-btn-font-size: 0.875rem !important;
+	--bs-btn-border-radius: 0.25rem !important;
+}
+
+.btn-lg,
+.btn-group-lg > .btn {
+	--bs-btn-padding-y: 0.5rem !important;
+	--bs-btn-padding-x: 1rem !important;
+	--bs-btn-font-size: 1.25rem !important;
+	--bs-btn-border-radius: 0.5rem !important;
+}
+
+.h-55.form-control,
+.h-55.form-select {
+	min-height: calc(1.5em + 0.75rem + 2px) !important;
+	height: auto !important;
+}
+
+
+/* จัดกลุ่มข้อความและ Input ให้อยู่แนวนอนเดียวกัน */
+.dt-length, .dt-search, 
+.dataTables_length, .dataTables_filter {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem; /* เพิ่มช่องว่างระหว่างข้อความกับกล่อง */
+    margin-bottom: 1rem;
+}
+
+/* บังคับไม่ให้ Input ขยายเต็ม 100% */
+.dt-length select, .dt-search input,
+.dataTables_length select, .dataTables_filter input {
+    width: auto !important;
+    display: inline-block !important;
+}
+
+/* ปรับให้ Search ไปชิดขวาตามมาตรฐาน */
+.dt-search, .dataTables_filter {
+    justify-content: flex-end;
+}

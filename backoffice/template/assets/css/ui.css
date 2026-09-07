@@ -1,0 +1,355 @@
+/* =====================================================================
+   ui.css — Design System layer (intern/am backoffice / CPDTH)
+   โหลดเป็นไฟล์สุดท้าย (หลัง custom.css + web.css) เพื่อคุม cascade ได้
+   หลักการ: คงเอกลักษณ์เดิม (ม่วง #605DFF, Bootstrap 5, Kanit) แต่รวมศูนย์เป็น
+   token + component class ให้สม่ำเสมอ / พรีเมียม / เข้าถึงง่าย (a11y)
+   NOTE: token + คลาสที่ยังไม่ถูกอ้างใน markup = inert (ไม่เปลี่ยนหน้าตาเดิม)
+   ===================================================================== */
+
+:root {
+    /* ---- Brand (ตรงกับ --bs-primary ของธีม กันสองแหล่งความจริง) ---- */
+    --brand-500: #605DFF;
+    --brand-600: #4b48e6;
+    --brand-400: #8b89ff;
+    --brand-soft: #eef0ff;
+
+    /* ---- Semantic (เฉดเข้มพอให้คอนทราสต์ ≥4.5:1 บนพื้นขาวที่ 12–14px) ---- */
+    --success: #15803d;
+    --success-soft: #e8f8ef;
+    --warning: #b45309;
+    --warning-soft: #fff4e5;
+    --info: #0369a1;
+    --info-soft: #e6f6fb;
+    --danger: #dc2626;
+    --danger-soft: #fdecec;
+
+    /* ---- Surface / text ---- */
+    --surface: #ffffff;
+    --bg: #f6f7fb;
+    --border: #eef0f3;
+    --text: #1f2937;
+    --text-muted: #5b6270;   /* ≥4.5:1 บนพื้นขาว (เข้มกว่า text-secondary เดิม) */
+
+    /* ---- Radius / shadow (นุ่ม โทน rgba(16,24,40)) ---- */
+    --radius-sm: 6px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --shadow-sm: 0 1px 2px rgba(16,24,40,.06), 0 1px 3px rgba(16,24,40,.08);
+    --shadow-md: 0 .5rem 1.25rem rgba(16,24,40,.08);
+
+    /* ---- Typography ---- */
+    --line-height-th: 1.6;   /* ไทย (Kanit) มีสระ/วรรณยุกต์ซ้อน ต้องการ line-height สบายตา */
+
+    /* ---- z-index scale (ระบบมี overlay/modal/popover ซ้อนกันจริง) ---- */
+    --z-dropdown: 1000;
+    --z-sticky: 1020;
+    --z-modal-backdrop: 1040;
+    --z-modal: 1050;
+    --z-popover: 1060;   /* flatpickr / select2 */
+    --z-toast: 1080;     /* SweetAlert2 */
+    --z-overlay: 99999;  /* #cpdth-loading (คงค่าเดิม) */
+}
+
+/* =====================================================================
+   Component classes
+   (ยังไม่ถูกอ้างใน markup จนกว่าจะ redesign หน้านั้น = inert ตอนนี้)
+   ===================================================================== */
+
+/* การ์ดพรีเมียม — วาง "เหนือ" .card ของ Bootstrap (ไม่ทับ .card ตรง ๆ กัน blast radius ทั้งระบบ) */
+.app-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow .2s ease, transform .2s ease;
+}
+.app-card.app-card--hover:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+}
+
+/* ปุ่มไอคอนในตาราง 34x34 (แทน inline style width/height ที่ซ้ำ ~30 จุด) */
+.icon-btn {
+    width: 34px;
+    height: 34px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.icon-btn .material-symbols-outlined { font-size: 18px; }
+
+/* ไอคอนวงกลมพื้นสีอ่อน (stat card) — modifier สีแทน inline background/color */
+.stat-icon--brand   { background: var(--brand-soft);   color: var(--brand-500); }
+.stat-icon--success { background: var(--success-soft); color: var(--success); }
+.stat-icon--warning { background: var(--warning-soft); color: var(--warning); }
+.stat-icon--info    { background: var(--info-soft);    color: var(--info); }
+
+/* empty / coming-soon state (การ์ด OTP ฯลฯ) */
+.empty-state {
+    color: var(--text-muted);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+/* =====================================================================
+   Accessibility: prefers-reduced-motion
+   ปิด motion ทั้งของเดิม (spin, .stat-card:hover, .waviy preloader) และของใหม่
+   สำหรับผู้ใช้ที่ตั้งค่า reduce — ไม่กระทบผู้ใช้ทั่วไป
+   ===================================================================== */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .001ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* =====================================================================
+   Login page (login.php) — พรีเมียม split-card + a11y
+   ===================================================================== */
+.login-page .main-content { min-height: 100vh; justify-content: center; padding: 24px; }
+.login-shell { width: 100%; max-width: 940px; }
+.login-card {
+    background: var(--surface);
+    border-radius: 22px;
+    box-shadow: 0 24px 64px rgba(16,24,40,.18);
+    overflow: hidden;
+    min-height: 560px;
+}
+
+/* ---- hero (ภาพเต็มด้านซ้าย) ---- */
+.login-hero { position: relative; background: linear-gradient(135deg, var(--brand-500), var(--brand-400)); }
+.login-hero img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+/* ---- form (จัดกึ่งกลางแนวตั้ง กันโล่งด้านล่าง) ---- */
+.login-form-wrap {
+    height: 100%;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: clamp(32px, 4.5vw, 60px);
+}
+.login-brand { display: flex; align-items: center; gap: 12px; margin-bottom: 28px; }
+.login-brand img { width: 46px; height: 46px; object-fit: contain; flex-shrink: 0; }
+.login-title { font-size: 1.7rem; font-weight: 700; margin: 0; color: var(--text); line-height: 1.25; }
+.login-subtitle { color: var(--text-muted); font-size: .92rem; }
+
+/* ---- fields ---- */
+.login-form-wrap .form-label { font-weight: 500; color: var(--text); margin-bottom: .4rem; }
+.login-form-wrap .form-control {
+    min-height: 48px !important;
+    padding: .65rem .9rem !important;
+    border-radius: 10px !important;
+    border-color: #e4e7ec !important;
+    background: #fff !important;
+}
+.login-page .form-control:focus {
+    border-color: var(--brand-400) !important;
+    box-shadow: 0 0 0 .2rem rgba(96,93,255,.2) !important;
+}
+/* กันพื้นเหลือง/ม่วงของ Chrome autofill */
+.login-form-wrap input:-webkit-autofill,
+.login-form-wrap input:-webkit-autofill:hover,
+.login-form-wrap input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 1000px #fff inset !important;
+    box-shadow: 0 0 0 1000px #fff inset !important;
+    -webkit-text-fill-color: var(--text) !important;
+    caret-color: var(--text);
+}
+
+/* ---- password + ปุ่มตา (ลอยในช่อง ไม่ใช้ input-group) ---- */
+.login-field { position: relative; }
+.login-field .form-control { padding-right: 46px !important; }
+.login-eye {
+    position: absolute; top: 0; right: 0; height: 100%; width: 46px;
+    border: 0; background: transparent; color: var(--text-muted);
+    display: inline-flex; align-items: center; justify-content: center;
+    cursor: pointer; border-radius: 0 10px 10px 0;
+}
+.login-eye:hover { color: var(--brand-500); }
+.login-eye .material-symbols-outlined { font-size: 20px; }
+
+/* ---- alert (inline แทน Swal) ---- */
+.login-alert {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--danger-soft); color: var(--danger);
+    border: 1px solid #f3c2c2; border-radius: 10px;
+    padding: .6rem .85rem; font-size: .9rem; margin-bottom: 18px;
+}
+
+/* ---- ปุ่มเข้าสู่ระบบ + สถานะกำลังโหลด ---- */
+.login-submit {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    min-height: 50px; padding: .7rem 1rem !important; font-weight: 600;
+    border-radius: 10px !important;
+    box-shadow: 0 10px 22px rgba(96,93,255,.32);
+}
+.login-submit .material-symbols-outlined { font-size: 20px; }
+.login-submit .login-submit-default { display: inline-flex; align-items: center; gap: 8px; }
+.login-submit .login-submit-loading { display: none; align-items: center; gap: 8px; }
+.login-submit.is-loading { opacity: .85; }
+.login-submit.is-loading .login-submit-default { display: none; }
+.login-submit.is-loading .login-submit-loading { display: inline-flex; }
+
+/* ---- footer ---- */
+.login-foot { margin: 26px 0 0; text-align: center; color: var(--text-muted); font-size: .8rem; }
+
+@media (max-width: 575.98px) {
+    .login-card { min-height: 0; border-radius: 16px; }
+    .login-form-wrap { padding: 30px 22px; }
+}
+
+/* =====================================================================
+   Dashboard (home.php)
+   ย้ายมาจาก custom.css เพื่อให้เป็นแหล่งเดียว + ใช้ token + คุมคอนทราสต์ผ่าน WCAG
+   (ต้องลบบล็อกเดิมออกจาก custom.css เพื่อไม่ให้ซ้ำ/ชน !important ของ .welcome-box)
+   ===================================================================== */
+.welcome-box.bg-primary { background: linear-gradient(120deg, var(--brand-500) 0%, var(--brand-400) 100%) !important; }
+.welcome-date-btn { background: #fff; color: var(--brand-500); border: 0; font-weight: 500; box-shadow: 0 2px 6px rgba(16,24,40,.12); }
+.welcome-date-btn .material-symbols-outlined { font-size: 18px; }
+
+.stat-card { transition: box-shadow .2s ease, transform .2s ease; }
+.stat-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.stat-icon { width: 54px; height: 54px; border-radius: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.stat-icon .material-symbols-outlined { font-size: 28px; }
+.stat-value { font-weight: 600; }
+.stat-trend { font-size: 12px; font-weight: 500; display: inline-flex; align-items: center; gap: 2px; }
+.stat-trend.up { color: var(--success); }    /* success token เข้มพอผ่าน 4.5:1 ที่ 12px */
+.stat-trend.down { color: var(--danger); }
+.stat-trend .material-symbols-outlined { font-size: 16px; }
+
+/* =====================================================================
+   Third-party widgets — ให้เข้าธีมแบรนด์ (ใช้ทั้ง login + dashboard)
+   ===================================================================== */
+.flatpickr-day.selected, .flatpickr-day.selected:hover,
+.flatpickr-day.startRange, .flatpickr-day.endRange {
+    background: var(--brand-500); border-color: var(--brand-500);
+}
+.flatpickr-day.inRange {
+    background: var(--brand-soft); border-color: var(--brand-soft);
+    box-shadow: -5px 0 0 var(--brand-soft), 5px 0 0 var(--brand-soft);
+}
+.flatpickr-day.today { border-color: var(--brand-400); }
+.swal2-styled.swal2-confirm { background-color: var(--brand-500) !important; }
+.swal2-styled.swal2-confirm:focus { box-shadow: 0 0 0 3px rgba(96,93,255,.4) !important; }
+
+/* =====================================================================
+   Sidebar / Header (main/sidebar.php) — ครอบทุกหน้า
+   CSS-only: ไม่แตะ markup, ไม่มี selector ใหม่ที่ชนกับ JS
+   (core.js อ้างด้วย id/class เดิมทั้งหมด: #layout-menu, .sidebar-area,
+   .menu-item/.title/.menu-title, .sidebar-user/.ShowUserFullname/.ShowUserRole/
+   .ShowUserAvatar/.logout-btn — ของทั้งหมดนี้ยังคงเดิมเป๊ะ)
+   ===================================================================== */
+.sidebar-area .logo { padding: 18px 16px; border-bottom: 1px solid var(--border); margin-bottom: 6px; }
+.sidebar-area .logo .logo-text { letter-spacing: .02em; }
+
+.sidebar-area .menu-title .menu-title-text {
+    color: var(--text-muted);
+    font-weight: 600;
+    letter-spacing: .04em;
+}
+.sidebar-area .menu-title:not(:first-child) { margin-top: 14px; }
+
+.sidebar-area .menu-vertical .menu-item .menu-link {
+    border-radius: var(--radius-sm);
+    margin: 2px 10px;
+    padding: 9px 10px 9px 14px;
+    transition: background-color .15s ease, color .15s ease;
+}
+.sidebar-area .menu-vertical .menu-item .menu-link:hover { background: var(--bg); }
+.sidebar-area .menu-vertical .menu-item .menu-link.active {
+    background: var(--brand-soft);
+    color: var(--brand-600);
+    font-weight: 500;
+}
+.sidebar-area .menu-vertical .menu-item .menu-link.active .menu-icon { color: var(--brand-500); }
+.sidebar-area .menu-vertical .menu-item .menu-link.active::before {
+    content: "";
+    position: absolute; left: 0; top: 18%; bottom: 18%; width: 3px;
+    background: var(--brand-500); border-radius: 0 3px 3px 0;
+}
+.sidebar-area .menu-link:focus-visible,
+.sidebar-user .logout-btn:focus-visible {
+    outline: 2px solid var(--brand-400); outline-offset: 2px;
+}
+.sidebar-area .menu-link .badge { font-size: 10px; font-weight: 600; min-width: 20px; }
+
+.sidebar-user .ShowUserAvatar { box-shadow: 0 0 0 2px var(--surface), 0 0 0 3px var(--border); }
+.sidebar-user .ShowUserRole { color: var(--text-muted); }
+.sidebar-user .logout-btn {
+    width: 34px; height: 34px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: background-color .15s ease;
+}
+.sidebar-user .logout-btn:hover { background: var(--danger-soft); }
+
+/* =====================================================================
+   List pages (user.php และหน้า list อื่น ๆ ที่ใช้ pattern เดียวกัน)
+   ตาราง + avatar + empty-state + pagination (ใช้ร่วมกันทุกหน้าผ่าน _pagination.php)
+   ===================================================================== */
+.default-table-area thead th {
+    color: var(--text-muted);
+    font-weight: 600;
+    font-size: .82rem;
+    border-bottom-color: var(--border);
+}
+.default-table-area tbody tr { transition: background-color .12s ease; }
+.default-table-area tbody tr:hover { background: var(--bg); }
+
+/* วงกลมตัวอักษรย่อชื่อ (แทน inline style background/color ที่ซ้ำในตาราง) */
+.avatar-initial {
+    width: 38px; height: 38px; flex-shrink: 0;
+    border-radius: 50%;
+    background: var(--brand-soft); color: var(--brand-500);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-weight: 500;
+}
+
+/* empty-state ของตาราง (ใหญ่กว่า .empty-state แบบ inline) */
+.list-empty { padding: 56px 16px; text-align: center; color: var(--text-muted); }
+.list-empty .list-empty-icon {
+    width: 56px; height: 56px; margin: 0 auto 12px;
+    border-radius: 50%; background: var(--bg);
+    display: flex; align-items: center; justify-content: center;
+}
+.list-empty .list-empty-icon .material-symbols-outlined { font-size: 26px; color: var(--text-muted); }
+.list-empty .list-empty-title { font-weight: 600; color: var(--text); margin-bottom: 2px; }
+.list-empty .list-empty-hint { font-size: .82rem; }
+
+/* pagination (ใช้ทุกหน้า list ผ่าน _pagination.php) */
+.pagination .page-link {
+    border-radius: var(--radius-sm);
+    margin: 0 2px;
+    border-color: var(--border);
+    color: var(--text);
+}
+.pagination .page-link:hover { background: var(--brand-soft); color: var(--brand-600); border-color: var(--brand-soft); }
+.pagination .page-item.disabled .page-link { color: var(--text-muted); background: transparent; }
+
+/* =====================================================================
+   Form pages (course_fromadd.php และหน้า form อื่นที่ใช้ pattern เดียวกัน)
+   สโคปด้วย .form-card ทั้งหมด — ไม่แตะ id/name/โครง .code-builder ที่ JS สร้าง DOM เอง
+   ===================================================================== */
+.form-card h4 {
+    font-size: 1.05rem;
+    color: var(--text);
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+}
+.form-card h6.text-secondary { letter-spacing: .02em; }
+.form-card .alert-success {
+    background: var(--success-soft); border-color: #cdeede; color: #14532d;
+    border-radius: var(--radius-sm);
+}
+.form-card .btn-primary.w-100.py-2 {
+    box-shadow: 0 10px 24px rgba(96,93,255,.2);
+    transition: box-shadow .15s ease, transform .15s ease;
+}
+.form-card .btn-primary.w-100.py-2:hover { box-shadow: 0 12px 28px rgba(96,93,255,.28); }
+
+/* =====================================================================
+   [ถัดไป] ยังไม่ทำในสเต็ปนี้:
+   - override .btn/.form-control ทั่วไปที่ชน web.css !important (ทำเมื่อ redesign form pages)
+   - line-height ไทยสำหรับ body/label ทั่วระบบ (ตรวจ regression หน้าอื่นก่อนเปิดใช้)
+   ===================================================================== */

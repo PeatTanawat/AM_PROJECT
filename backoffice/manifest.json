@@ -1,0 +1,21 @@
+{
+  "name": "CPDTH Admin",
+  "short_name": "CPDTH",
+  "description": "CPDTH Admin System",
+  "start_url": "/am/main/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#152238",
+  "icons": [
+    {
+      "src": "/am/assets/images/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/am/assets/images/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

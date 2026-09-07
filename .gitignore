@@ -1,0 +1,27 @@
+# Vendor dependencies
+vendor/
+**/vendor/
+
+# Environment configurations
+.env
+*.env
+**/.env
+
+# Uploads & Temporary files
+/backoffice/upload/*
+!/backoffice/upload/.gitkeep
+/cpdth/upload/*
+!/cpdth/upload/.gitkeep
+
+# Log files
+*.log
+**/*.log
+
+# Database dumps
+*.sql
+
+# IDEs & OS files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
